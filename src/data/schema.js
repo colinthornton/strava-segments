@@ -12,10 +12,14 @@ import {
   GraphQLObjectType as ObjectType,
 } from 'graphql';
 
+import segments from './queries/segment';
+
 const schema = new Schema({
   query: new ObjectType({
     name: 'Query',
-    fields: {},
+    fields: {
+      segments,
+    },
   }),
 });
 

@@ -17,7 +17,7 @@ const routes = {
   children: [
     {
       path: '',
-      load: () => import(/* webpackChunkName: 'not-found' */ './not-found'),
+      load: () => import(/* webpackChunkName: 'home' */ './home'),
     },
 
     // Wildcard routes, e.g. { path: '(.*)', ... } (must go last)
