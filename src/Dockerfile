@@ -1,5 +1,6 @@
+# For dev server
 FROM node:alpine
 WORKDIR /usr/src/app
 COPY ./package*.json ./
-RUN yarn install
-CMD [ "yarn", "start" ]
+RUN npm install
+CMD [ "npm", "start" ]

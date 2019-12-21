@@ -16,9 +16,9 @@ import run from './run';
 // GitHub Pages
 const remote = {
   name: 'github',
-  url: 'https://github.com/<user>/<repo>.git',
+  url: 'https://github.com/colinthornton/strava-segments.git',
   branch: 'gh-pages',
-  website: 'https://<user>.github.io/<repo>/',
+  website: 'https://colinthornton.github.io/strava-segments/',
   static: true,
 };
 
