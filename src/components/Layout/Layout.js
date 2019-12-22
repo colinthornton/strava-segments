@@ -17,7 +17,7 @@ import s from './Layout.css';
 
 export default function Layout({ children }) {
   useStyles(s, normalizeCss);
-  return <>{children}</>;
+  return <div className="container">{children}</div>;
 }
 
 Layout.propTypes = {

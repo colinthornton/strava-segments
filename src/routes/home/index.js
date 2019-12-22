@@ -16,6 +16,10 @@ const segmentsQuery = `query Segments($startLatlong: [Float]!, $endLatlong: [Flo
     segments(startLatlong: $startLatlong, endLatlong: $endLatlong) {
       id
       name
+      distance
+      avgGrade
+      elevDifference
+      climbCategoryDesc
     }
   }`;
 
