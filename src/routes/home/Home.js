@@ -1,9 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export default function Home({ segments }) {
+import { getLocations } from './segmentOptions';
+
+export default function Home({ initSegments }) {
+  const segments = [...initSegments];
+
+  const locationNames = Object.keys(getLocations());
+
+  const [formLocation, setFormLocation] = useState(locationNames[0]);
+
+  // useEffect
+
   return (
     <div>
+      <form>
+        <select
+          value={formLocation}
+          onChange={e => setFormLocation(e.target.value)}
+        >
+          {locationNames.map(location => (
+            <option value={location}>{location.toUpperCase()}</option>
+          ))}
+        </select>
+      </form>
       <h1>Kanto Segments</h1>
       <table className="table table-striped">
         <thead className="thead-dark">
@@ -32,5 +52,5 @@ export default function Home({ segments }) {
 }
 
 Home.propTypes = {
-  segments: PropTypes.arrayOf(PropTypes.object).isRequired,
+  initSegments: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

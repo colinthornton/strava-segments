@@ -2,32 +2,26 @@ import React from 'react';
 
 import Home from './Home';
 import Layout from '../../components/Layout';
-
-// const honshu = {
-//   startLatlong: [33.4, 130.85],
-//   endLatlong: [41.55, 142.08],
-// };
-const kanto = {
-  startLatlong: [34.8968, 138.3825],
-  endLatlong: [37.1622, 140.9011],
-};
+import { getOptions } from './segmentOptions';
 
 const segmentsQuery = `query Segments($startLatlong: [Float]!, $endLatlong: [Float]!) {
-    segments(startLatlong: $startLatlong, endLatlong: $endLatlong) {
-      id
-      name
-      distance
-      avgGrade
-      elevDifference
-      climbCategoryDesc
-    }
-  }`;
+  segments(startLatlong: $startLatlong, endLatlong: $endLatlong) {
+    id
+    name
+    distance
+    avgGrade
+    elevDifference
+    climbCategoryDesc
+  }
+}`;
+
+const variables = { ...getOptions().location };
 
 async function action({ fetch }) {
   const res = await fetch('/graphql', {
     body: JSON.stringify({
       query: segmentsQuery,
-      variables: { ...kanto },
+      variables,
     }),
   });
   const { data } = await res.json();
@@ -39,7 +33,7 @@ async function action({ fetch }) {
     title: 'Strava Segments',
     component: (
       <Layout>
-        <Home segments={data.segments} />
+        <Home initSegments={data.segments} />
       </Layout>
     ),
   };
