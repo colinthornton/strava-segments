@@ -8,6 +8,9 @@ import SegmentOptions from './SegmentOptions';
 const variables = {
   startLatlong: SegmentOptions.locations.honshu.value.startLatlong,
   endLatlong: SegmentOptions.locations.honshu.value.endLatlong,
+  activityType: SegmentOptions.activityTypes.any.value,
+  minCat: SegmentOptions.climbingCategories[0].value,
+  maxCat: SegmentOptions.climbingCategories[5].value,
 };
 
 async function action({ fetch }) {

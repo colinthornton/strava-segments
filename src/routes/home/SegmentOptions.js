@@ -30,6 +30,33 @@ const activityTypes = {
   },
 };
 
+const climbingCategories = {
+  0: {
+    text: 'NC',
+    value: 0,
+  },
+  1: {
+    text: '4',
+    value: 1,
+  },
+  2: {
+    text: '3',
+    value: 2,
+  },
+  3: {
+    text: '2',
+    value: 3,
+  },
+  4: {
+    text: '1',
+    value: 4,
+  },
+  5: {
+    text: 'HC',
+    value: 5,
+  },
+};
+
 export default class SegmentOptions {
   static get locationKeys() {
     return Object.keys(locations);
@@ -45,5 +72,13 @@ export default class SegmentOptions {
 
   static get activityTypes() {
     return { ...activityTypes };
+  }
+
+  static get climbingCategoryKeys() {
+    return Object.keys(climbingCategories);
+  }
+
+  static get climbingCategories() {
+    return { ...climbingCategories };
   }
 }

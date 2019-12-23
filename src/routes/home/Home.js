@@ -17,6 +17,14 @@ export default function Home({ initSegments }) {
   const [formActivityTypeKey, setFormActivityTypeKey] = useState(
     SegmentOptions.activityTypeKeys[0],
   );
+  const [formMinCatKey, setFormMinCatKey] = useState(
+    SegmentOptions.climbingCategoryKeys[0],
+  );
+  const [formMaxCatKey, setFormMaxCatKey] = useState(
+    SegmentOptions.climbingCategoryKeys[
+      SegmentOptions.climbingCategoryKeys.length - 1
+    ],
+  );
 
   useEffect(() => {
     setLoading(true);
@@ -26,6 +34,8 @@ export default function Home({ initSegments }) {
         SegmentOptions.locations[formLocationKey].value.startLatlong,
       endLatlong: SegmentOptions.locations[formLocationKey].value.endLatlong,
       activityType: SegmentOptions.activityTypes[formActivityTypeKey].value,
+      minCat: SegmentOptions.climbingCategories[formMinCatKey].value,
+      maxCat: SegmentOptions.climbingCategories[formMaxCatKey].value,
     })
       .then(fetchedSegments => {
         setSegments(fetchedSegments);
@@ -37,19 +47,23 @@ export default function Home({ initSegments }) {
       .finally(() => {
         setLoading(false);
       });
-  }, [formLocationKey, formActivityTypeKey]);
+  }, [formLocationKey, formActivityTypeKey, formMinCatKey, formMaxCatKey]);
 
   return (
     <div>
       <h1>Strava Segments</h1>
       <div className="row">
-        <form className="form-inline p-3">
-          <div className="form-group">
-            <label htmlFor="locationNameSelect">
+        <form className="d-flex flex-row flex-wrap w-100">
+          <div className="form-group ml-4 mb-2">
+            <label
+              className="d-flex flex-row align-items-center"
+              htmlFor="locationSelect"
+            >
               Location
               <select
+                disabled={loading}
                 className="form-control ml-2"
-                id="locationNameSelect"
+                id="locationSelect"
                 value={formLocationKey}
                 onChange={e => setFormLocationKey(e.target.value)}
               >
@@ -61,10 +75,14 @@ export default function Home({ initSegments }) {
               </select>
             </label>
           </div>
-          <div className="form-group ml-4">
-            <label htmlFor="activityTypeSelect">
+          <div className="form-group ml-4 mb-2">
+            <label
+              className="d-flex flex-row align-items-center"
+              htmlFor="activityTypeSelect"
+            >
               Activity
               <select
+                disabled={loading}
                 className="form-control ml-2"
                 id="activityTypeSelect"
                 value={formActivityTypeKey}
@@ -73,6 +91,46 @@ export default function Home({ initSegments }) {
                 {SegmentOptions.activityTypeKeys.map(key => (
                   <option key={key} value={key}>
                     {SegmentOptions.activityTypes[key].text}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <div className="form-group d-flex flex-row align-items-center ml-4 mb-2">
+            <label
+              className="d-flex flex-row align-items-center text-nowrap"
+              htmlFor="minCatSelect"
+            >
+              Climbing Category
+              <select
+                disabled={loading}
+                className="form-control mx-2"
+                id="minCatSelect"
+                value={formMinCatKey}
+                onChange={e => setFormMinCatKey(e.target.value)}
+              >
+                {SegmentOptions.climbingCategoryKeys.map(key => (
+                  <option key={key} value={key}>
+                    {SegmentOptions.climbingCategories[key].text}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label
+              className="d-flex flex-row align-items-center text-nowrap"
+              htmlFor="maxCatSelect"
+            >
+              ～
+              <select
+                disabled={loading}
+                className="form-control ml-2"
+                id="maxCatSelect"
+                value={formMaxCatKey}
+                onChange={e => setFormMaxCatKey(e.target.value)}
+              >
+                {SegmentOptions.climbingCategoryKeys.map(key => (
+                  <option key={key} value={key}>
+                    {SegmentOptions.climbingCategories[key].text}
                   </option>
                 ))}
               </select>
@@ -95,7 +153,11 @@ export default function Home({ initSegments }) {
             <tbody>
               {segments.map(segment => (
                 <tr key={segment.id}>
-                  <td>{segment.name}</td>
+                  <td>
+                    <a href={`https://www.strava.com/segments/${segment.id}`}>
+                      {segment.name}
+                    </a>
+                  </td>
                   <td className="text-right">{segment.distance} m</td>
                   <td className="text-right">{segment.avgGrade}%</td>
                   <td className="text-right">{segment.elevDifference} m</td>

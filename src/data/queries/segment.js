@@ -31,9 +31,9 @@ const segments = {
     const params = {
       bounds: `${startLatlong[0]},${startLatlong[1]},${endLatlong[0]},${endLatlong[1]}`,
     };
-    if (activityType) params.activity_type = activityType;
-    if (minCat) params.min_cat = minCat;
-    if (maxCat) params.max_cat = maxCat;
+    if (activityType != null) params.activity_type = activityType;
+    if (minCat >= 0 && minCat <= 5) params.min_cat = minCat;
+    if (maxCat >= 0 && maxCat <= 5) params.max_cat = maxCat;
     const parameterizedUrl = appendParams(url, params);
     return fetch(parameterizedUrl, {
       headers: {
