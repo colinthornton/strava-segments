@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import ApplicationContext from '../../components/ApplicationContext';
@@ -41,7 +41,14 @@ export default function Home({ initSegments }) {
     if (maxCatKey !== undefined) setFormMaxCatKey(maxCatKey);
   };
 
+  const initialRender = useRef(true);
   useEffect(() => {
+    // Skips fetching on initial render
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+
     setLoading(true);
     setErrorMessage(null);
     fetchSegments(context.fetch, {
@@ -91,7 +98,7 @@ export default function Home({ initSegments }) {
 
 Home.propTypes = {
   initSegments: PropTypes.arrayOf(
-    PropTypes.exact({
+    PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
       distance: PropTypes.number,

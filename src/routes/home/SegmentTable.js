@@ -21,7 +21,7 @@ export default function SegmentTable({ segments, loading }) {
 
 SegmentTable.propTypes = {
   segments: PropTypes.arrayOf(
-    PropTypes.exact({
+    PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
       distance: PropTypes.number,

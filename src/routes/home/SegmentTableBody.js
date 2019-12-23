@@ -23,7 +23,7 @@ export default function SegmentTableBody({ segments }) {
 
 SegmentTableBody.propTypes = {
   segments: PropTypes.arrayOf(
-    PropTypes.exact({
+    PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
       distance: PropTypes.number,

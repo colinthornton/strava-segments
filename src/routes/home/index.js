@@ -14,7 +14,7 @@ const variables = {
 };
 
 async function action({ fetch }) {
-  const segments = await fetchSegments(fetch, variables);
+  const segments = await fetchSegments(fetch, variables, { withGraphQL: true });
   return {
     chunks: ['home'],
     title: 'Strava Segments',
