@@ -10,7 +10,7 @@ const locations = {
 };
 
 const options = {
-  location: locations.kanto,
+  location: locations.honshu,
 };
 
 export function getLocations() {
