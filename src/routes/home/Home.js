@@ -15,31 +15,15 @@ export default function Home({ initSegments }) {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   // Segment filter options
-  const [formLocationKey, setFormLocationKey] = useState(
-    SegmentOptions.locationKeys[0],
-  );
-  const [formActivityTypeKey, setFormActivityTypeKey] = useState(
-    SegmentOptions.activityTypeKeys[0],
-  );
-  const [formMinCatKey, setFormMinCatKey] = useState(
-    SegmentOptions.climbingCategoryKeys[
-      SegmentOptions.climbingCategoryKeys.length - 1
-    ],
-  );
-  const [formMaxCatKey, setFormMaxCatKey] = useState(
-    SegmentOptions.climbingCategoryKeys[0],
-  );
-  const setFormState = ({
-    locationKey,
-    activityTypeKey,
-    minCatKey,
-    maxCatKey,
-  }) => {
-    if (locationKey !== undefined) setFormLocationKey(locationKey);
-    if (activityTypeKey !== undefined) setFormActivityTypeKey(activityTypeKey);
-    if (minCatKey !== undefined) setFormMinCatKey(minCatKey);
-    if (maxCatKey !== undefined) setFormMaxCatKey(maxCatKey);
-  };
+  const [formState, setFormState] = useState({
+    locationKey: SegmentOptions.locationKeys[0],
+    activityTypeKey: SegmentOptions.activityTypeKeys[0],
+    minCatKey:
+      SegmentOptions.climbingCategoryKeys[
+        SegmentOptions.climbingCategoryKeys.length - 1
+      ],
+    maxCatKey: SegmentOptions.climbingCategoryKeys[0],
+  });
 
   const initialRender = useRef(true);
   useEffect(() => {
@@ -51,37 +35,26 @@ export default function Home({ initSegments }) {
 
     setLoading(true);
     setErrorMessage(null);
-    fetchSegments(context.fetch, {
-      startLatlong:
-        SegmentOptions.locations[formLocationKey].value.startLatlong,
-      endLatlong: SegmentOptions.locations[formLocationKey].value.endLatlong,
-      activityType: SegmentOptions.activityTypes[formActivityTypeKey].value,
-      minCat: SegmentOptions.climbingCategories[formMinCatKey].value,
-      maxCat: SegmentOptions.climbingCategories[formMaxCatKey].value,
-    })
+    fetchSegments(context.fetch, SegmentOptions.toQueryVariables(formState))
       .then(fetchedSegments => {
         setSegments(fetchedSegments);
       })
       .catch(() => {
-        setSegments([]);
         setErrorMessage('Failed to load segments');
       })
       .finally(() => {
         setLoading(false);
       });
-  }, [formLocationKey, formActivityTypeKey, formMinCatKey, formMaxCatKey]);
+  }, [formState]);
 
   return (
     <div>
       <h1>Strava Segments</h1>
       <div className="row">
         <SegmentOptionsForm
-          locationKey={formLocationKey}
-          activityTypeKey={formActivityTypeKey}
-          minCatKey={formMinCatKey}
-          maxCatKey={formMaxCatKey}
+          state={formState}
           setState={setFormState}
-          loading={loading}
+          disabled={loading}
         />
       </div>
       <div className="row">

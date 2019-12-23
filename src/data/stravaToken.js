@@ -12,7 +12,7 @@ let accessToken;
 let expiresAt = 0;
 let lastFetch = null;
 
-async function getToken() {
+async function getStravaToken() {
   if (lastFetch !== null) {
     return lastFetch;
   }
@@ -45,4 +45,4 @@ async function getToken() {
   return accessToken;
 }
 
-export default getToken;
+export default getStravaToken;

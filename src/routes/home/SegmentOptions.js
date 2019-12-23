@@ -81,4 +81,19 @@ export default class SegmentOptions {
   static get climbingCategories() {
     return { ...climbingCategories };
   }
+
+  static toQueryVariables({
+    locationKey,
+    activityTypeKey,
+    minCatKey,
+    maxCatKey,
+  }) {
+    return {
+      startLatlong: SegmentOptions.locations[locationKey].value.startLatlong,
+      endLatlong: SegmentOptions.locations[locationKey].value.endLatlong,
+      activityType: SegmentOptions.activityTypes[activityTypeKey].value,
+      minCat: SegmentOptions.climbingCategories[minCatKey].value,
+      maxCat: SegmentOptions.climbingCategories[maxCatKey].value,
+    };
+  }
 }

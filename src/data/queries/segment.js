@@ -9,7 +9,7 @@ import fetch from 'node-fetch';
 
 import SegmentType from '../types/SegmentType';
 import { appendParams, snakeToCamel } from '../utils';
-import getToken from '../token';
+import getStravaToken from '../stravaToken';
 
 const url = `https://www.strava.com/api/v3/segments/explore`;
 
@@ -27,7 +27,7 @@ const segments = {
   },
   type: new ListType(SegmentType),
   async resolve(_, { startLatlong, endLatlong, activityType, minCat, maxCat }) {
-    const accessToken = await getToken();
+    const accessToken = await getStravaToken();
     const params = {
       bounds: `${startLatlong[0]},${startLatlong[1]},${endLatlong[0]},${endLatlong[1]}`,
     };

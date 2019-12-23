@@ -3,14 +3,8 @@ import PropTypes from 'prop-types';
 
 import SegmentOptions from './SegmentOptions';
 
-export default function SegmentOptionsForm({
-  locationKey,
-  activityTypeKey,
-  minCatKey,
-  maxCatKey,
-  setState,
-  loading,
-}) {
+export default function SegmentOptionsForm({ state, setState, disabled }) {
+  const { locationKey, activityTypeKey, minCatKey, maxCatKey } = state;
   return (
     <form className="d-flex flex-row flex-wrap w-100">
       <div className="form-group ml-4 mb-2">
@@ -20,11 +14,11 @@ export default function SegmentOptionsForm({
         >
           Location
           <select
-            disabled={loading}
+            disabled={disabled}
             className="form-control ml-2"
             id="locationSelect"
             value={locationKey}
-            onChange={e => setState({ locationKey: e.target.value })}
+            onChange={e => setState({ ...state, locationKey: e.target.value })}
           >
             {SegmentOptions.locationKeys.map(key => (
               <option key={key} value={key}>
@@ -41,11 +35,13 @@ export default function SegmentOptionsForm({
         >
           Activity
           <select
-            disabled={loading}
+            disabled={disabled}
             className="form-control ml-2"
             id="activityTypeSelect"
             value={activityTypeKey}
-            onChange={e => setState({ activityTypeKey: e.target.value })}
+            onChange={e =>
+              setState({ ...state, activityTypeKey: e.target.value })
+            }
           >
             {SegmentOptions.activityTypeKeys.map(key => (
               <option key={key} value={key}>
@@ -62,12 +58,13 @@ export default function SegmentOptionsForm({
         >
           Climbing Category
           <select
-            disabled={loading}
+            disabled={disabled}
             className="form-control mx-2"
             id="minCatSelect"
             value={minCatKey}
             onChange={e =>
               setState({
+                ...state,
                 minCatKey: e.target.value,
                 maxCatKey:
                   e.target.value > maxCatKey ? e.target.value : maxCatKey,
@@ -87,12 +84,13 @@ export default function SegmentOptionsForm({
         >
           ～
           <select
-            disabled={loading}
+            disabled={disabled}
             className="form-control ml-2"
             id="maxCatSelect"
             value={maxCatKey}
             onChange={e =>
               setState({
+                ...state,
                 maxCatKey: e.target.value,
                 minCatKey:
                   e.target.value < minCatKey ? e.target.value : minCatKey,
@@ -112,10 +110,12 @@ export default function SegmentOptionsForm({
 }
 
 SegmentOptionsForm.propTypes = {
-  locationKey: PropTypes.string.isRequired,
-  activityTypeKey: PropTypes.string.isRequired,
-  minCatKey: PropTypes.string.isRequired,
-  maxCatKey: PropTypes.string.isRequired,
+  state: PropTypes.exact({
+    locationKey: PropTypes.string,
+    activityTypeKey: PropTypes.string,
+    minCatKey: PropTypes.string,
+    maxCatKey: PropTypes.string,
+  }).isRequired,
   setState: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };

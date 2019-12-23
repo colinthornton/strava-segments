@@ -1,4 +1,4 @@
-import getToken from '../../data/token';
+import getStravaToken from '../../data/stravaToken';
 import { appendParams, snakeToCamel } from '../../data/utils';
 
 const segmentsQuery = `query Segments(
@@ -40,11 +40,12 @@ async function fetchSegments(fetch, variables, { withGraphQL = false } = {}) {
   }
 
   const { startLatlong, endLatlong, activityType, minCat, maxCat } = variables;
-  const accessToken = await getToken();
+  const accessToken = await getStravaToken();
   const params = {
     bounds: `${startLatlong[0]},${startLatlong[1]},${endLatlong[0]},${endLatlong[1]}`,
   };
-  if (activityType != null) params.activity_type = activityType;
+  if (activityType === 'riding' || activityType === 'running')
+    params.activity_type = activityType;
   if (minCat >= 0 && minCat <= 5) params.min_cat = minCat;
   if (maxCat >= 0 && maxCat <= 5) params.max_cat = maxCat;
   const parameterizedUrl = appendParams(
