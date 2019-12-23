@@ -2,15 +2,19 @@ import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import ApplicationContext from '../../components/ApplicationContext';
+import SegmentOptionsForm from './SegmentOptionsForm';
 import SegmentOptions from './SegmentOptions';
 import fetchSegments from './fetchSegments';
+import SegmentTable from './SegmentTable';
+import SegmentMessage from './SegmentMessage';
 
 export default function Home({ initSegments }) {
   const { context } = useContext(ApplicationContext);
+  // Segment data state
   const [segments, setSegments] = useState(initSegments);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  // Search options
+  // Segment filter options
   const [formLocationKey, setFormLocationKey] = useState(
     SegmentOptions.locationKeys[0],
   );
@@ -18,13 +22,24 @@ export default function Home({ initSegments }) {
     SegmentOptions.activityTypeKeys[0],
   );
   const [formMinCatKey, setFormMinCatKey] = useState(
-    SegmentOptions.climbingCategoryKeys[0],
-  );
-  const [formMaxCatKey, setFormMaxCatKey] = useState(
     SegmentOptions.climbingCategoryKeys[
       SegmentOptions.climbingCategoryKeys.length - 1
     ],
   );
+  const [formMaxCatKey, setFormMaxCatKey] = useState(
+    SegmentOptions.climbingCategoryKeys[0],
+  );
+  const setFormState = ({
+    locationKey,
+    activityTypeKey,
+    minCatKey,
+    maxCatKey,
+  }) => {
+    if (locationKey !== undefined) setFormLocationKey(locationKey);
+    if (activityTypeKey !== undefined) setFormActivityTypeKey(activityTypeKey);
+    if (minCatKey !== undefined) setFormMinCatKey(minCatKey);
+    if (maxCatKey !== undefined) setFormMaxCatKey(maxCatKey);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -53,134 +68,36 @@ export default function Home({ initSegments }) {
     <div>
       <h1>Strava Segments</h1>
       <div className="row">
-        <form className="d-flex flex-row flex-wrap w-100">
-          <div className="form-group ml-4 mb-2">
-            <label
-              className="d-flex flex-row align-items-center"
-              htmlFor="locationSelect"
-            >
-              Location
-              <select
-                disabled={loading}
-                className="form-control ml-2"
-                id="locationSelect"
-                value={formLocationKey}
-                onChange={e => setFormLocationKey(e.target.value)}
-              >
-                {SegmentOptions.locationKeys.map(key => (
-                  <option key={key} value={key}>
-                    {SegmentOptions.locations[key].text}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          <div className="form-group ml-4 mb-2">
-            <label
-              className="d-flex flex-row align-items-center"
-              htmlFor="activityTypeSelect"
-            >
-              Activity
-              <select
-                disabled={loading}
-                className="form-control ml-2"
-                id="activityTypeSelect"
-                value={formActivityTypeKey}
-                onChange={e => setFormActivityTypeKey(e.target.value)}
-              >
-                {SegmentOptions.activityTypeKeys.map(key => (
-                  <option key={key} value={key}>
-                    {SegmentOptions.activityTypes[key].text}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          <div className="form-group d-flex flex-row align-items-center ml-4 mb-2">
-            <label
-              className="d-flex flex-row align-items-center text-nowrap"
-              htmlFor="minCatSelect"
-            >
-              Climbing Category
-              <select
-                disabled={loading}
-                className="form-control mx-2"
-                id="minCatSelect"
-                value={formMinCatKey}
-                onChange={e => setFormMinCatKey(e.target.value)}
-              >
-                {SegmentOptions.climbingCategoryKeys.map(key => (
-                  <option key={key} value={key}>
-                    {SegmentOptions.climbingCategories[key].text}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label
-              className="d-flex flex-row align-items-center text-nowrap"
-              htmlFor="maxCatSelect"
-            >
-              ～
-              <select
-                disabled={loading}
-                className="form-control ml-2"
-                id="maxCatSelect"
-                value={formMaxCatKey}
-                onChange={e => setFormMaxCatKey(e.target.value)}
-              >
-                {SegmentOptions.climbingCategoryKeys.map(key => (
-                  <option key={key} value={key}>
-                    {SegmentOptions.climbingCategories[key].text}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-        </form>
+        <SegmentOptionsForm
+          locationKey={formLocationKey}
+          activityTypeKey={formActivityTypeKey}
+          minCatKey={formMinCatKey}
+          maxCatKey={formMaxCatKey}
+          setState={setFormState}
+          loading={loading}
+        />
       </div>
       <div className="row">
-        <table className="table table-striped">
-          <thead className="thead-dark">
-            <tr>
-              <th className="text-center">Name</th>
-              <th className="text-center">Distance</th>
-              <th className="text-center">Avg Grade</th>
-              <th className="text-center">Elev Difference</th>
-              <th className="text-center">Climb Category</th>
-            </tr>
-          </thead>
-          {loading ? null : (
-            <tbody>
-              {segments.map(segment => (
-                <tr key={segment.id}>
-                  <td>
-                    <a href={`https://www.strava.com/segments/${segment.id}`}>
-                      {segment.name}
-                    </a>
-                  </td>
-                  <td className="text-right">{segment.distance} m</td>
-                  <td className="text-right">{segment.avgGrade}%</td>
-                  <td className="text-right">{segment.elevDifference} m</td>
-                  <td>{segment.climbCategoryDesc}</td>
-                </tr>
-              ))}
-            </tbody>
-          )}
-        </table>
-        <div className="d-flex justify-content-center w-100">
-          {segments.length === 0 ? <p>No segments found</p> : null}
-          {loading ? (
-            <div className="spinner-border" role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          ) : null}
-          {errorMessage ? <p className="text-danger">{errorMessage}</p> : null}
-        </div>
+        <SegmentTable segments={segments} loading={loading} />
+        <SegmentMessage
+          noSegments={segments.length === 0}
+          loading={loading}
+          errorMessage={errorMessage}
+        />
       </div>
     </div>
   );
 }
 
 Home.propTypes = {
-  initSegments: PropTypes.arrayOf(PropTypes.object).isRequired,
+  initSegments: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      distance: PropTypes.number,
+      avgGrade: PropTypes.number,
+      elevDifference: PropTypes.number,
+      climbCategoryDesc: PropTypes.string,
+    }),
+  ).isRequired,
 };

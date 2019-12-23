@@ -31,29 +31,29 @@ const activityTypes = {
 };
 
 const climbingCategories = {
-  0: {
-    text: 'NC',
-    value: 0,
+  cat5: {
+    text: 'HC',
+    value: 5,
   },
-  1: {
-    text: '4',
-    value: 1,
-  },
-  2: {
-    text: '3',
-    value: 2,
-  },
-  3: {
-    text: '2',
-    value: 3,
-  },
-  4: {
+  cat4: {
     text: '1',
     value: 4,
   },
-  5: {
-    text: 'HC',
-    value: 5,
+  cat3: {
+    text: '2',
+    value: 3,
+  },
+  cat2: {
+    text: '3',
+    value: 2,
+  },
+  cat1: {
+    text: '4',
+    value: 1,
+  },
+  cat0: {
+    text: 'NC',
+    value: 0,
   },
 };
 
