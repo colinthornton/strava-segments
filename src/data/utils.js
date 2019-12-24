@@ -24,15 +24,12 @@ export function snakeToCamel(snakeKeyObj) {
 }
 
 /**
- * Returns a new string with `params` appended to `url`.
- * @param {string} url Base URL
+ * Returns a new string with `params`.
  * @param {Object} params Query parameter key:value pairs
- * @return {string} `url` with query parameters appended
+ * @return {string} Params in the form `key=value&otherKey=otherValue`
  */
-export function appendParams(url, params) {
-  return Object.keys(params).reduce(
-    (parameterizedUrl, key, i) =>
-      `${parameterizedUrl}${i === 0 ? '?' : '&'}${key}=${params[key]}`,
-    url,
-  );
+export function toParamString(params) {
+  return Object.entries(params)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
 }

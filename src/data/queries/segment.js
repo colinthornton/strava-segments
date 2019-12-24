@@ -8,7 +8,7 @@ import {
 import fetch from 'node-fetch';
 
 import SegmentType from '../types/SegmentType';
-import { appendParams, snakeToCamel } from '../utils';
+import { toParamString, snakeToCamel } from '../utils';
 import getStravaToken from '../stravaToken';
 
 const url = `https://www.strava.com/api/v3/segments/explore`;
@@ -28,6 +28,7 @@ const segments = {
   type: new ListType(SegmentType),
   async resolve(_, { startLatlong, endLatlong, activityType, minCat, maxCat }) {
     const accessToken = await getStravaToken();
+
     const params = {
       bounds: `${startLatlong[0]},${startLatlong[1]},${endLatlong[0]},${endLatlong[1]}`,
     };
@@ -35,8 +36,10 @@ const segments = {
       params.activity_type = activityType;
     if (minCat >= 0 && minCat <= 5) params.min_cat = minCat;
     if (maxCat >= 0 && maxCat <= 5) params.max_cat = maxCat;
-    const parameterizedUrl = appendParams(url, params);
-    return fetch(parameterizedUrl, {
+    const paramString = toParamString(params);
+
+    const urlWithParams = `${url}?${paramString}`;
+    return fetch(urlWithParams, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
