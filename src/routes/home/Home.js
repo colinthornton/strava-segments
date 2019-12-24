@@ -8,22 +8,14 @@ import fetchSegments from './fetchSegments';
 import SegmentTable from './SegmentTable';
 import SegmentMessage from './SegmentMessage';
 
-export default function Home({ initSegments }) {
+export default function Home({ initialSegments, initialOptions }) {
   const { context } = useContext(ApplicationContext);
   // Segment data state
-  const [segments, setSegments] = useState(initSegments);
+  const [segments, setSegments] = useState(initialSegments);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   // Segment filter options
-  const [formState, setFormState] = useState({
-    locationKey: SegmentOptions.locationKeys[0],
-    activityTypeKey: SegmentOptions.activityTypeKeys[0],
-    minCatKey:
-      SegmentOptions.climbingCategoryKeys[
-        SegmentOptions.climbingCategoryKeys.length - 1
-      ],
-    maxCatKey: SegmentOptions.climbingCategoryKeys[0],
-  });
+  const [formState, setFormState] = useState(initialOptions);
 
   const initialRender = useRef(true);
   useEffect(() => {
@@ -70,7 +62,7 @@ export default function Home({ initSegments }) {
 }
 
 Home.propTypes = {
-  initSegments: PropTypes.arrayOf(
+  initialSegments: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
@@ -80,4 +72,10 @@ Home.propTypes = {
       climbCategoryDesc: PropTypes.string,
     }),
   ).isRequired,
+  initialOptions: PropTypes.shape({
+    locationKey: PropTypes.string,
+    activityTypeKey: PropTypes.string,
+    minCatKey: PropTypes.string,
+    maxCatKey: PropTypes.string,
+  }).isRequired,
 };

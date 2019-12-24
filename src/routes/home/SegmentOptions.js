@@ -1,4 +1,11 @@
 const locations = {
+  kanto: {
+    text: 'Kanto',
+    value: {
+      startLatlong: [34.8968, 138.3825],
+      endLatlong: [37.1622, 140.9011],
+    },
+  },
   honshu: {
     text: 'Honshu',
     value: {
@@ -6,11 +13,32 @@ const locations = {
       endLatlong: [41.55, 142.08],
     },
   },
-  kanto: {
-    text: 'Kanto',
+  kyushu: {
+    text: 'Kyushu',
     value: {
-      startLatlong: [34.8968, 138.3825],
-      endLatlong: [37.1622, 140.9011],
+      startLatlong: [30.9843, 128.5272],
+      endLatlong: [33.9635, 132.0867],
+    },
+  },
+  shikoku: {
+    text: 'Shikoku',
+    value: {
+      startLatlong: [32.5373, 131.7891],
+      endLatlong: [34.6282, 135.4551],
+    },
+  },
+  hokkaido: {
+    text: 'Hokkaido',
+    value: {
+      startLatlong: [41.37, 139.32],
+      endLatlong: [45.58, 145.54],
+    },
+  },
+  colorado: {
+    text: 'Colorado',
+    value: {
+      startLatlong: [36.99, -109.04],
+      endLatlong: [41.0, -102.04],
     },
   },
 };

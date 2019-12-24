@@ -5,22 +5,32 @@ import fetchSegments from './fetchSegments';
 import Home from './Home';
 import SegmentOptions from './SegmentOptions';
 
+const initialOptions = {
+  locationKey: 'kanto',
+  activityTypeKey: 'any',
+  minCatKey: 'cat0',
+  maxCatKey: 'cat5',
+};
+
 const variables = {
-  startLatlong: SegmentOptions.locations.honshu.value.startLatlong,
-  endLatlong: SegmentOptions.locations.honshu.value.endLatlong,
-  activityType: SegmentOptions.activityTypes.any.value,
-  minCat: SegmentOptions.climbingCategories.cat0.value,
-  maxCat: SegmentOptions.climbingCategories.cat5.value,
+  startLatlong:
+    SegmentOptions.locations[initialOptions.locationKey].value.startLatlong,
+  endLatlong:
+    SegmentOptions.locations[initialOptions.locationKey].value.endLatlong,
+  activityType:
+    SegmentOptions.activityTypes[initialOptions.activityTypeKey].value,
+  minCat: SegmentOptions.climbingCategories[initialOptions.minCatKey].value,
+  maxCat: SegmentOptions.climbingCategories[initialOptions.maxCatKey].value,
 };
 
 async function action({ fetch }) {
-  const segments = await fetchSegments(fetch, variables, { withGraphQL: true });
+  const segments = await fetchSegments(fetch, variables);
   return {
     chunks: ['home'],
     title: 'Strava Segments',
     component: (
       <Layout>
-        <Home initSegments={segments} />
+        <Home initialSegments={segments} initialOptions={initialOptions} />
       </Layout>
     ),
   };
