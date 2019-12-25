@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Layout from '../../components/Layout';
+import SegmentOptions from '../../data/services/SegmentOptions';
 import fetchSegments from './fetchSegments';
 import Home from './Home';
-import SegmentOptions from './SegmentOptions';
 
 const initialOptions = {
   locationKey: 'kanto',

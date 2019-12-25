@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import PropTypes from 'prop-types';
 
+import SegmentMessage from '../../components/Segments/SegmentMessage';
+import SegmentOptionsForm from '../../components/Segments/SegmentOptionsForm';
+import SegmentTable from '../../components/Segments/SegmentTable';
 import ApplicationContext from '../../components/ApplicationContext';
-import SegmentOptionsForm from './SegmentOptionsForm';
-import SegmentOptions from './SegmentOptions';
+import SegmentOptions from '../../data/services/SegmentOptions';
 import fetchSegments from './fetchSegments';
-import SegmentTable from './SegmentTable';
-import SegmentMessage from './SegmentMessage';
 
 export default function Home({ initialSegments, initialOptions }) {
   const { context } = useContext(ApplicationContext);

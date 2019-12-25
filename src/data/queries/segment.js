@@ -7,9 +7,9 @@ import {
 } from 'graphql';
 import fetch from 'node-fetch';
 
+import getStravaToken from '../services/stravaToken';
 import SegmentType from '../types/SegmentType';
 import { toParamString, snakeToCamel } from '../utils';
-import getStravaToken from '../stravaToken';
 
 const url = `https://www.strava.com/api/v3/segments/explore`;
 
