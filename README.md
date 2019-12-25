@@ -2,10 +2,10 @@
 
 ## Setup
 
-Set your Strava API information in `src/data/stravaToken.js`. Otherwise set the corresponding environment variables when you start the server.
+Set your Strava API information in `src/data/services/stravaToken.js`. Otherwise set the corresponding environment variables when you start the server.
 
 ```js
-// src/data/stravaToken.js
+// src/data/services/stravaToken.js
 const stravaConfig = {
   client_id: process.env.STRAVA_CLIENT_ID || 'client_id_here',
   client_secret: process.env.STRAVA_CLIENT_SECRET || 'client_secret_here',
