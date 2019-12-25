@@ -142,6 +142,7 @@
     "flow": "flow",
     "flow:check": "flow check",
     "test": "jest",
+    "test:src": "jest ./test",
     "test-watch": "npm run test -- --watch --notify",
     "test-cover": "npm run test -- --coverage",
     "coverage": "npm run test-cover && opn coverage/lcov-report/index.html",

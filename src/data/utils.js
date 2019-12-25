@@ -1,11 +1,18 @@
 function convertSnakeToCamel(snake) {
   return snake
     .split('_')
-    .map((word, i) => {
-      if (i === 0) {
+    .map((word, i, words) => {
+      // No snakes found
+      if (words.length === 1) {
         return word;
       }
-      return word.slice(0, 1).toUpperCase() + word.slice(1);
+
+      if (i === 0) {
+        return word.toLowerCase();
+      }
+      return (
+        word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase()
+      );
     })
     .join('');
 }
