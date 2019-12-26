@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import SegmentOptions from '../../data/services/SegmentOptions';
-import SegmentOptionSelect from './SegmentOptionSelect';
+import LabeledSelect from '../LabeledSelect';
 
 const locationOptions = SegmentOptions.locationKeys.map(key => ({
   value: key,
@@ -23,7 +23,7 @@ export default function SegmentOptionsForm({ state, setState, disabled }) {
   return (
     <form className="d-flex flex-row flex-wrap w-100">
       <div className="form-group ml-4 mb-2">
-        <SegmentOptionSelect
+        <LabeledSelect
           id="locationSelect"
           label="Location"
           value={state.locationKey}
@@ -35,7 +35,7 @@ export default function SegmentOptionsForm({ state, setState, disabled }) {
         />
       </div>
       <div className="form-group ml-4 mb-2">
-        <SegmentOptionSelect
+        <LabeledSelect
           id="activityTypeSelect"
           label="Activity"
           value={state.activityTypeKey}
@@ -47,7 +47,7 @@ export default function SegmentOptionsForm({ state, setState, disabled }) {
         />
       </div>
       <div className="form-group d-flex flex-row align-items-center ml-4 mb-2">
-        <SegmentOptionSelect
+        <LabeledSelect
           id="minCatSelect"
           label="Climbing Category"
           value={state.minCatKey}
@@ -64,7 +64,7 @@ export default function SegmentOptionsForm({ state, setState, disabled }) {
           selectClass="form-control mx-2"
           disabled={disabled}
         />
-        <SegmentOptionSelect
+        <LabeledSelect
           id="maxCatSelect"
           label="～"
           value={state.maxCatKey}

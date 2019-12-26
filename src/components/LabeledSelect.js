@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function SegmentOptionSelect({
+export default function LabeledSelect({
   id,
   label,
   value,
@@ -32,7 +32,7 @@ export default function SegmentOptionSelect({
   );
 }
 
-SegmentOptionSelect.propTypes = {
+LabeledSelect.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
@@ -49,7 +49,7 @@ SegmentOptionSelect.propTypes = {
   disabled: PropTypes.bool,
 };
 
-SegmentOptionSelect.defaultProps = {
+LabeledSelect.defaultProps = {
   label: '',
   labelClass: '',
   selectClass: '',
