@@ -67,5 +67,12 @@ module.exports = {
         process.env.TWITTER_CONSUMER_SECRET ||
         'KTZ6cxoKnEakQCeSpZlaUCJWGAlTEBJj0y2EMkUBujA7zWSvaQ',
     },
+
+    // https://www.strava.com/settings/api
+    strava: {
+      client_id: process.env.STRAVA_CLIENT_ID || '',
+      client_secret: process.env.STRAVA_CLIENT_SECRET || '',
+      refresh_token: process.env.STRAVA_REFRESH_TOKEN || '',
+    },
   },
 };

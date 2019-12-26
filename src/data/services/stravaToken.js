@@ -1,10 +1,6 @@
 import fetch from 'node-fetch';
 
-const stravaConfig = {
-  client_id: process.env.STRAVA_CLIENT_ID || '',
-  client_secret: process.env.STRAVA_CLIENT_SECRET || '',
-  refresh_token: process.env.STRAVA_REFRESH_TOKEN || '',
-};
+import config from '../../config';
 
 const url = 'https://www.strava.com/oauth/token';
 
@@ -23,7 +19,10 @@ async function getStravaToken() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ ...stravaConfig, grant_type: 'refresh_token' }),
+      body: JSON.stringify({
+        ...config.auth.strava,
+        grant_type: 'refresh_token',
+      }),
     })
       .then(res => {
         if (!res.ok) {
